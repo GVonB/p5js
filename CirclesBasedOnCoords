@@ -1,0 +1,103 @@
+//initial variables
+let circleColor = 0;
+let circleColorRed = 0;
+let circleColorBlue = 0;
+let circleColorGreen = 0;
+let countUp = true;
+
+//canvas setup
+function setup() {
+  frameRate(60);
+  createCanvas(600, 600);
+  background(random(255), random(255), random(255));
+}
+
+//fullscreen function
+function mousePressed() {
+  if (mouseX > 0 && mouseX < 600 && mouseY > 0 && mouseY < 600) {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  }
+}
+//main function
+function draw() {
+  //generates the random coordinates
+  let randCoordX = random(600);
+  let randCoordY = random(600);
+  let inverseRandCoordX = 600 - randCoordX;
+  let inverseRandCoordY = 600 - randCoordY;
+  
+  //line creation
+  //coords
+  line(randCoordX, randCoordY, inverseRandCoordX, inverseRandCoordY);
+  //coloring
+  strokeWeight(3);
+  stroke(random(255), random(255), random(255));
+  
+  //calculate difference in coordinate and inverse
+  let differenceInX = abs(randCoordX - inverseRandCoordX);
+  let differenceInY = abs(randCoordY - inverseRandCoordY);
+  
+  //pthagorean theorem to calculate distance between as a radius
+  let xLeg = sq(differenceInX);
+  let yLeg = sq(differenceInY);
+  let hype = sqrt(xLeg + yLeg);
+  let circleRadius = hype;
+  
+  //draw circle based on radius
+  noFill();
+  stroke(circleColorRed, circleColorBlue, circleColorGreen);
+  circle(300, 300, circleRadius);
+  
+  //circle tips at the end of the lines
+  circle(300, 300, abs(300-randCoordX));
+  circle(randCoordX, randCoordY, 1);
+  circle(inverseRandCoordX, inverseRandCoordY, 1);
+  
+  //circle color goes up on grayscale if not fully white
+  
+  /*
+  Old Grayscale Loop
+  
+  if(countUp === true){
+    circleColor = circleColor + 1;
+  }
+  else{
+    circleColor = circleColor - 1;
+  }
+    
+  if(circleColor === 255){
+    countUp = false;
+  }
+  if(circleColor === 0){
+    countUp = true;
+  }
+  */
+   
+  //individual rgb color loops
+  
+  //loops the red color
+  if(circleColorRed < 255){
+    circleColorRed = circleColorRed + random(5);
+  }
+  else{
+    circleColorRed = 0;
+  }
+ 
+  //loops the green color
+  if(circleColorGreen < 255){
+    circleColorGreen = circleColorGreen + random(5);
+  }
+  else{
+    circleColorGreen = 0;
+  }
+  
+  //loops the blue color
+  if(circleColorBlue < 255){
+    circleColorBlue = circleColorBlue + random(5);
+  }
+  else{
+    circleColorBlue = 0;
+  }
+  
+}
